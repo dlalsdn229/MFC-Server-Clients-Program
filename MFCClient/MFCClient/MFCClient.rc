@@ -1,0 +1,239 @@
+// Microsoft Visual C++ generated resource script.
+//
+#include "resource.h"
+
+#define APSTUDIO_READONLY_SYMBOLS
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 2 resource.
+//
+#ifndef APSTUDIO_INVOKED
+#include "targetver.h"
+#endif
+#include "afxres.h"
+
+/////////////////////////////////////////////////////////////////////////////
+#undef APSTUDIO_READONLY_SYMBOLS
+
+/////////////////////////////////////////////////////////////////////////////
+// 한국어 resources
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_KOR)
+#ifdef _WIN32
+LANGUAGE LANG_KOREAN, SUBLANG_DEFAULT
+#pragma code_page(949)
+#endif //_WIN32
+
+#ifdef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// TEXTINCLUDE
+//
+
+1 TEXTINCLUDE 
+BEGIN
+    "resource.h\0"
+END
+
+2 TEXTINCLUDE 
+BEGIN
+    "#ifndef APSTUDIO_INVOKED\r\n"
+    "#include ""targetver.h""\r\n"
+    "#endif\r\n"
+    "#include ""afxres.h""\r\n"
+    "\0"
+END
+
+3 TEXTINCLUDE 
+BEGIN
+    "#define _AFX_NO_SPLITTER_RESOURCES\r\n"
+    "#define _AFX_NO_OLE_RESOURCES\r\n"
+    "#define _AFX_NO_TRACKER_RESOURCES\r\n"
+    "#define _AFX_NO_PROPERTY_RESOURCES\r\n"
+    "\r\n"
+    "#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_KOR)\r\n"
+    "LANGUAGE 18, 1\r\n"
+    "#pragma code_page(949)\r\n"
+    "#include ""res\\MFCClient.rc2""  // Microsoft Visual C++ 이외의 다른 도구에서 편집한 리소스입니다.\r\n"
+    "#include ""l.KOR\\afxres.rc""      // 표준 구성 요소입니다.\r\n"
+    "#endif\r\n"
+    "\0"
+END
+
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Icon
+//
+
+// Icon with lowest ID value placed first to ensure application icon
+// remains consistent on all systems.
+IDR_MAINFRAME           ICON                    "res\\MFCClient.ico"
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Dialog
+//
+
+IDD_ABOUTBOX DIALOGEX 0, 0, 170, 62
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "MFCClient 정보"
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    ICON            IDR_MAINFRAME,IDC_STATIC,14,14,21,20
+    LTEXT           "MFCClient, 버전 1.0",IDC_STATIC,42,14,114,8,SS_NOPREFIX
+    LTEXT           "Copyright (C) 2020",IDC_STATIC,42,26,114,8
+    DEFPUSHBUTTON   "확인",IDOK,113,41,50,14,WS_GROUP
+END
+
+IDD_MFCCLIENT_DIALOG DIALOGEX 0, 0, 615, 358
+STYLE DS_SETFONT | DS_MODALFRAME | DS_FIXEDSYS | WS_POPUP | WS_VISIBLE | WS_CAPTION | WS_SYSMENU
+EXSTYLE WS_EX_APPWINDOW
+CAPTION "MFCClient"
+FONT 9, "MS Shell Dlg", 0, 0, 0x1
+BEGIN
+    LISTBOX         IDC_LIST1,164,34,339,97,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "클라이언트 생성",IDC_CREATE_BTN,24,42,126,20
+    LISTBOX         IDC_CLIENT_LIST,507,33,101,318,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Client List",IDC_STATIC,508,22,31,8
+    LTEXT           "Server Seq",IDC_STATIC,166,24,35,8
+    LTEXT           "Server ACK",IDC_STATIC,166,139,36,8
+    LISTBOX         IDC_LIST3,164,151,339,97,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    PUSHBUTTON      "모든 전송 스레드 일시정지",IDC_SUSPEND_BTN,24,77,126,20
+    PUSHBUTTON      "모든 전송 스레드 재개",IDC_RESTART_BTN,24,99,126,19
+    LTEXT           "Error Log",IDC_STATIC,167,253,30,8
+    LISTBOX         IDC_ERROR_LIST,164,264,338,87,LBS_SORT | LBS_NOINTEGRALHEIGHT | WS_VSCROLL | WS_TABSTOP
+    LTEXT           "Client",IDC_STATIC,7,7,18,8
+    GROUPBOX        "Control Panel",IDC_STATIC,8,30,153,321
+    GROUPBOX        "전송 스레드 제어",IDC_STATIC,14,67,141,119
+    LTEXT           "Epoch",IDC_STATIC,26,124,20,8
+    EDITTEXT        IDC_EDIT_batch,110,122,40,14,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_EDIT_batchV,67,122,40,14,ES_AUTOHSCROLL | ES_READONLY
+    LTEXT           "Log 출력 주기",IDC_STATIC,26,144,40,8
+    EDITTEXT        IDC_EDIT_period,110,142,40,14,ES_AUTOHSCROLL | ES_NUMBER
+    EDITTEXT        IDC_EDIT_periodV,67,142,40,14,ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "적용",IDC_BUTTON_apply1,61,165,50,14
+    GROUPBOX        "파일 저장",IDC_STATIC,14,192,141,154
+    LTEXT           "파일 이름",IDC_STATIC,23,208,26,8
+    EDITTEXT        IDC_EDIT_nameV,55,205,40,14,ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_EDIT_name,112,205,40,14,ES_AUTOHSCROLL
+    LTEXT           ".txt",IDC_STATIC,96,208,12,8
+    LTEXT           "저장 단위",IDC_STATIC,23,230,26,8
+    EDITTEXT        IDC_EDIT_lineV,55,227,40,14,ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY
+    EDITTEXT        IDC_EDIT_line,112,227,40,14,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "lines",IDC_STATIC,96,231,14,8
+    LTEXT           "저장 경로",IDC_STATIC,23,253,26,8
+    EDITTEXT        IDC_EDIT_dirV,22,267,129,14,ES_AUTOHSCROLL | ES_READONLY,WS_EX_RIGHT
+    LTEXT           "저장 주기",IDC_STATIC,23,294,26,8
+    EDITTEXT        IDC_EDIT_sleep,112,291,39,14,ES_AUTOHSCROLL | ES_NUMBER
+    LTEXT           "ms",IDC_STATIC,96,294,10,8
+    EDITTEXT        IDC_EDIT_sleepV,54,291,40,14,ES_RIGHT | ES_AUTOHSCROLL | ES_READONLY
+    PUSHBUTTON      "적용",IDC_BUTTON2,61,325,50,14
+    PUSHBUTTON      "...",IDC_FileDlg,54,249,25,14
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+VS_VERSION_INFO VERSIONINFO
+ FILEVERSION 1,0,0,1
+ PRODUCTVERSION 1,0,0,1
+ FILEFLAGSMASK 0x3fL
+#ifdef _DEBUG
+ FILEFLAGS 0x1L
+#else
+ FILEFLAGS 0x0L
+#endif
+ FILEOS 0x4L
+ FILETYPE 0x1L
+ FILESUBTYPE 0x0L
+BEGIN
+    BLOCK "StringFileInfo"
+    BEGIN
+        BLOCK "041203b5"
+        BEGIN
+            VALUE "CompanyName", "TODO: <회사 이름>"
+            VALUE "FileDescription", "TODO: <파일 설명>"
+            VALUE "FileVersion", "1.0.0.1"
+            VALUE "InternalName", "MFCClient.exe"
+            VALUE "LegalCopyright", "TODO: (c) <회사 이름>.  All rights reserved."
+            VALUE "OriginalFilename", "MFCClient.exe"
+            VALUE "ProductName", "TODO: <제품 이름>"
+            VALUE "ProductVersion", "1.0.0.1"
+        END
+    END
+    BLOCK "VarFileInfo"
+    BEGIN
+        VALUE "Translation", 0x412, 949
+    END
+END
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// DESIGNINFO
+//
+
+#ifdef APSTUDIO_INVOKED
+GUIDELINES DESIGNINFO 
+BEGIN
+    IDD_ABOUTBOX, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 163
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 55
+    END
+
+    IDD_MFCCLIENT_DIALOG, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 608
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 351
+    END
+END
+#endif    // APSTUDIO_INVOKED
+
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// String Table
+//
+
+STRINGTABLE 
+BEGIN
+    IDS_ABOUTBOX            "MFCClient 정보(&A)..."
+    IDP_SOCKETS_INIT_FAILED "Windows 소켓을 초기화하지 못했습니다."
+END
+
+#endif    // 한국어 resources
+/////////////////////////////////////////////////////////////////////////////
+
+
+
+#ifndef APSTUDIO_INVOKED
+/////////////////////////////////////////////////////////////////////////////
+//
+// Generated from the TEXTINCLUDE 3 resource.
+//
+#define _AFX_NO_SPLITTER_RESOURCES
+#define _AFX_NO_OLE_RESOURCES
+#define _AFX_NO_TRACKER_RESOURCES
+#define _AFX_NO_PROPERTY_RESOURCES
+
+#if !defined(AFX_RESOURCE_DLL) || defined(AFX_TARG_KOR)
+LANGUAGE 18, 1
+#pragma code_page(949)
+#include "res\MFCClient.rc2"  // Microsoft Visual C++ 이외의 다른 도구에서 편집한 리소스입니다.
+#include "l.KOR\afxres.rc"      // 표준 구성 요소입니다.
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+#endif    // not APSTUDIO_INVOKED
+
