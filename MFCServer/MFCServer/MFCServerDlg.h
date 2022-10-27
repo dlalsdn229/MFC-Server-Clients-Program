@@ -70,6 +70,7 @@ public:
 	void Wait(DWORD dwMillisecond);
 	static UINT SaveFileThread(LPVOID pParam);
 	queue<CString> q;
+	queue<CString> err_q;
 protected:
 	afx_msg LRESULT OnAcceptSocket(WPARAM wParam, LPARAM lParam);
 	afx_msg LRESULT OnClientMsgRecv(WPARAM wParam, LPARAM lParam);

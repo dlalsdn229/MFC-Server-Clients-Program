@@ -76,6 +76,7 @@ public:
 	static UINT SaveFileThread(LPVOID pParam);
 	void Wait(DWORD dwMillisecond);
 	queue<CString> q;
+	queue<CString> err_q;
 
 	afx_msg void OnBnClickedButton1();
 	afx_msg void OnBnClickedCreateBtn();

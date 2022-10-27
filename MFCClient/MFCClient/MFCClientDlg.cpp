@@ -124,7 +124,7 @@ BOOL CMFCClientDlg::OnInitDialog()
 	lines=10000;
 	thread_period=2000;
 	dir = _T("C:\\Users\\22009601\\Desktop\\savetxt\\Client");
-	filename = _T("Client_");
+	filename = _T("Client");
 	EndSaveThread=false;
 
 	if(g_Lock == NULL) {
@@ -279,6 +279,7 @@ afx_msg LRESULT CMFCClientDlg::OnClientRecv(WPARAM wParam, LPARAM lParam)
 				
 
 				EnterCriticalSection(g_Lock);
+					err_q.push(e);
 					m_error_list.InsertString(-1,e);
 					m_error_list.SetCurSel(m_error_list.GetCount()-1);
 				LeaveCriticalSection(g_Lock);
@@ -311,6 +312,7 @@ afx_msg LRESULT CMFCClientDlg::OnClientRecv(WPARAM wParam, LPARAM lParam)
 			if(ack != _ttoi(recv_msgs[k+2])){
 				e.Format(_T("Client%d : ACK ERROR ack=%d, recv_msgs=%d"),_ttoi(recv_msgs[k-1]),ack, _ttoi(recv_msgs[k+2]) );
 				EnterCriticalSection(g_Lock);
+					err_q.push(e);
 					m_error_list.InsertString(-1,e);
 					m_error_list.SetCurSel(m_error_list.GetCount()-1);
 				LeaveCriticalSection(g_Lock);
@@ -443,8 +445,7 @@ void CMFCClientDlg::OnClose()
 	for(int i =0;i<m_ptrServerSocketList.GetCount();i++){
 		
 			OutputDebugString(_T("cThread \n"));
-			cThread[i]->PostThreadMessage(WM_QUIT,0,0);
-		
+			cThread[i]->PostThreadMessage(WM_QUIT,0,0);		
 	}
 	
 	delete(p_savethread);
@@ -485,6 +486,8 @@ UINT CMFCClientDlg::SaveFileThread(LPVOID pParam){
 
 	CMFCClientDlg* pDlg = (CMFCClientDlg*) AfxGetApp()->m_pMainWnd;
 	CMFCClientDlg* fir = (CMFCClientDlg*) pParam;
+
+	int c=0;
 	while(1){		
 
 		//스레드 동작 주기
@@ -523,10 +526,10 @@ UINT CMFCClientDlg::SaveFileThread(LPVOID pParam){
 		
 		//파일이름 옆에 파일 번호
 		CString num;
-		num.Format(_T("%d"),count);
+		num.Format(_T("%d"),c);
 		//파일 경로 및 파일 이름,형식
-		CString filepath = folderpath + pDlg->filename+ num +_T(".txt");
-		
+		CString filepath = folderpath + pDlg->filename+_T("_")+ num +_T(".txt");
+		c++;
 		//파일 오픈에러
 		if(!file.Open(filepath, CFile::modeReadWrite | CFile::modeCreate | CFile::modeNoTruncate, &e)){
 			e.ReportError();			
@@ -534,30 +537,64 @@ UINT CMFCClientDlg::SaveFileThread(LPVOID pParam){
 
 		//파일 정상 오픈
 		else{			
-				//lines 만큼 파일 쓰기
-				for(int i =0;i<pDlg->lines;i++){					
+			//lines 만큼 파일 쓰기
+			for(int i =0;i<pDlg->lines;i++){					
+				CString data;	
+				//크리티컬 섹션 시작
+				EnterCriticalSection(g_Lock);
+					data = pDlg->q.front();
+					pDlg->q.pop();
+				LeaveCriticalSection(g_Lock);
+				//크리티컬 섹션 끝
+				file.WriteString(data + _T("\n"));
+			}		
+
+			//현재시간
+			CString currentDate;
+			CTime time = CTime::GetCurrentTime();
+			currentDate.Format(_T("%d-%d-%d %d:%d:%d"),
+				 time.GetYear(), time.GetMonth(), time.GetDay(),
+				 time.GetHour(), time.GetMinute(), time.GetSecond());
+			//파일에 파라미터 정보 및 날짜 기록
+			CString info;
+			info.Format(_T("\nParameter Information : lines=%d , thread_period=%d (ms)\ndate=%s"),pDlg->lines,pDlg->thread_period,currentDate);
+			file.WriteString(info);
+			//파일 닫기
+			file.Close();
+		}
+		
+
+		//에러 로그 저장
+		CStdioFile err_file;
+		CFileException ex;
+		CreateDirectory(folderpath + _T("\\ErrorLog"),NULL);
+		CString filepath2 = folderpath + _T("ErrorLog\\")+pDlg->filename +_T("_ErrorLog.txt");
+		if(!pDlg->err_q.empty())
+		{
+			if(!err_file.Open(filepath2, CFile::modeReadWrite | CFile::modeCreate | CFile::modeNoTruncate, &ex))
+			{
+				ex.ReportError();
+			}
+			else
+			{	err_file.SeekToEnd();
+				EnterCriticalSection(g_Lock);
+					int errqsize = pDlg->err_q.size();
+				LeaveCriticalSection(g_Lock);
+				for(int i =0;i<errqsize;i++)
+				{					
 					CString data;	
 					//크리티컬 섹션 시작
 					EnterCriticalSection(g_Lock);
-						data = pDlg->q.front();
-						pDlg->q.pop();
+						data = pDlg->err_q.front();
+						pDlg->err_q.pop();
 					LeaveCriticalSection(g_Lock);
 					//크리티컬 섹션 끝
-					file.WriteString(data + _T("\n"));
-				}				
+					
+					err_file.WriteString(data + _T("\n"));
+				}
+				err_file.Close();
+			}
 		}
-		//현재시간
-		CString currentDate;
-		CTime time = CTime::GetCurrentTime();
-		currentDate.Format(_T("%d-%d-%d %d:%d:%d"),
-             time.GetYear(), time.GetMonth(), time.GetDay(),
-             time.GetHour(), time.GetMinute(), time.GetSecond());
-		//파일에 파라미터 정보 및 날짜 기록
-		CString info;
-		info.Format(_T("\nParmeter Setting Information : lines=%d , thread_period=%d (ms)\ndate=%s"),pDlg->lines,pDlg->thread_period,currentDate);
-		file.WriteString(info);
-		//파일 닫기
-		file.Close();
 	}
 
 	return 0;
